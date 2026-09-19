@@ -1,4 +1,7 @@
 # ZTL_PA
+## Backend Sistema di Gestione Multe ZTL
+
+Realizzazione di un backend per la gestione del calcolo delle multe a seguito del passaggio di autoveicoli attraverso i varchi di una Zona a Traffico Limitato (ZTL). Per l'esame di Programmazione Avanzata (A.A. 2025/2026) del corso di Laurea Magistrale in Ingegneria Informatica e dell'Automazione UNIVPM
 ## Analisi dei Requisiti
 
 ### Attori
