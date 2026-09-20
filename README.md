@@ -72,3 +72,8 @@ Il sistema prevede i seguenti attori:
 #### RF8 — Inizializzazione Sistema
 
 - Uno script di seed inizializza il database con i dati minimi necessari al funzionamento del sistema: utenti (con relativo ruolo e credito iniziale), tipologie di veicolo con relative tariffe, e dati di esempio per ZTL e varchi.
+
+
+### Diagramma dei casi d'uso
+
+![Diagramma dei casi d'uso](docs/images/Use_Case.png)
