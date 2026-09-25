@@ -1,0 +1,63 @@
+{
+  "name": "ztl_pa",
+  "version": "1.0.0",
+  "description": "Progetto di programmazione avanzata",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+  "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+  "build": "tsc",
+  "start": "node dist/server.js",
+  "test": "jest",
+  "seed": "ts-node src/seed/seed.ts",
+  "generate-keys": "mkdir -p keys && openssl genrsa -out keys/jwtRS256.key 2048 && openssl rsa -in keys/jwtRS256.key -pubout -out keys/jwtRS256.key.pub"
+ },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/otech99/ZTL_PA.git"
+  },
+  "keywords": [],
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/otech99/ZTL_PA/issues"
+  },
+  "homepage": "https://github.com/otech99/ZTL_PA#readme",
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/express": "^5.0.6",
+    "@types/jest": "^30.0.0",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^26.6.2",
+    "@types/pdfkit": "^0.17.6",
+    "@types/qrcode": "^1.5.6",
+    "@types/supertest": "^7.2.1",
+    "@types/uuid": "^10.0.0",
+    "jest": "^30.5.2",
+    "supertest": "^7.3.0",
+    "ts-jest": "^29.4.13",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^18.0.3",
+    "express": "^5.2.1",
+    "express-validator": "^7.3.2",
+    "jsonwebtoken": "^9.0.3",
+    "pdfkit": "^0.20.2",
+    "pg": "^8.23.0",
+    "pg-hstore": "^2.3.4",
+    "qrcode": "^1.5.4",
+    "sequelize": "^6.37.8",
+    "uuid": "^14.0.2"
+  },
+  "allowScripts": {
+    "bcrypt@6.0.0": true,
+    "@parcel/watcher@2.6.0": true,
+    "unrs-resolver@1.12.2": true
+  }
+}

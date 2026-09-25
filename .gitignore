@@ -1,0 +1,26 @@
+# Dipendenze
+node_modules/
+
+# Build
+dist/
+
+# Variabili d'ambiente (contengono credenziali/percorsi sensibili)
+.env
+
+# Chiavi JWT (private/pubbliche, generate localmente via npm run generate-keys)
+keys/
+
+# Test
+coverage/
+
+# Log
+*.log
+npm-debug.log*
+
+# Editor/OS
+.vscode/
+.idea/
+.DS_Store
+
+# Docker
+*.pid

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" agent="Claude" version="24.0.0">
+  <diagram name="Creazione ZTL Sequence (CRUD rappresentativo)" id="crud-ztl-seq-1">
+    <mxGraphModel dx="1500" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1500" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Lifelines -->
+        <mxCell id="life_attore" value="Operatore" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="120" height="620" as="geometry" />
+        </mxCell>
+
+        <mxCell id="life_router" value="Router" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="280" y="40" width="110" height="620" as="geometry" />
+        </mxCell>
+
+        <mxCell id="life_authmw" value="AuthMiddleware" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="510" y="40" width="170" height="620" as="geometry" />
+        </mxCell>
+
+        <mxCell id="life_ztlctrl" value="ZTLController" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="790" y="40" width="150" height="620" as="geometry" />
+        </mxCell>
+
+        <mxCell id="life_ztlsvc" value="ZTLService" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="40" width="140" height="620" as="geometry" />
+        </mxCell>
+
+        <mxCell id="life_db" value="Database" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="1300" y="40" width="140" height="620" as="geometry" />
+        </mxCell>
+
+        <!-- m1: Operatore -> Router -->
+        <mxCell id="msg1" value="POST /ztl (dati ZTL) + JWT" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;startArrow=none;strokeWidth=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="100" y="110" as="sourcePoint" />
+            <mxPoint x="335" y="110" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- m2: Router -> AuthMiddleware -->
+        <mxCell id="msg2" value="instrada richiesta" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;startArrow=none;strokeWidth=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="335" y="150" as="sourcePoint" />
+            <mxPoint x="595" y="150" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- m3: AuthMiddleware -> Database -->
+        <mxCell id="msg3" value="verifica credito residuo utente" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;startArrow=none;strokeWidth=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="595" y="190" as="sourcePoint" />
+            <mxPoint x="1370" y="190" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- m4: Database -> AuthMiddleware (return, dashed) -->
+        <mxCell id="msg4" value="credito residuo" style="html=1;verticalAlign=bottom;endArrow=open;endFill=0;startArrow=none;dashed=1;strokeWidth=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1370" y="230" as="sourcePoint" />
+            <mxPoint x="595" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Break frame: credito esaurito -->
+        <mxCell id="breakFrame" value="break" style="shape=umlFrame;whiteSpace=wrap;html=1;pointerEvents=0;width=70;height=30;" vertex="1" parent="1">
+          <mxGeometry x="20" y="260" width="660" height="95" as="geometry" />
+        </mxCell>
+
+        <mxCell id="guardBreak" value="[credito esaurito]" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="100" y="274" width="180" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- m5: AuthMiddleware -> Operatore (return, dashed, inside break) -->
+        <mxCell id="msg5" value="401 Unauthorized" style="html=1;verticalAlign=bottom;endArrow=open;endFill=0;startArrow=none;dashed=1;strokeWidth=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="595" y="320" as="sourcePoint" />
+            <mxPoint x="100" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- m6: AuthMiddleware -> Database (consuma token, dopo il break) -->
+        <mxCell id="msg6" value="consuma token (0.50)" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;startArrow=none;strokeWidth=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="595" y="380" as="sourcePoint" />
+            <mxPoint x="1370" y="380" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- m7: AuthMiddleware -> ZTLController -->
+        <mxCell id="msg7" value="richiesta autorizzata" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;startArrow=none;strokeWidth=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="595" y="420" as="sourcePoint" />
+            <mxPoint x="865" y="420" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- m8: ZTLController -> ZTLService -->
+        <mxCell id="msg8" value="creaZTL(dati)" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;startArrow=none;strokeWidth=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="865" y="460" as="sourcePoint" />
+            <mxPoint x="1120" y="460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- m9: ZTLService -> Database -->
+        <mxCell id="msg9" value="salva ZTL" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;startArrow=none;strokeWidth=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1120" y="500" as="sourcePoint" />
+            <mxPoint x="1370" y="500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- m10: Database -> ZTLService (return, dashed) -->
+        <mxCell id="msg10" value="ZTL creata (id)" style="html=1;verticalAlign=bottom;endArrow=open;endFill=0;startArrow=none;dashed=1;strokeWidth=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1370" y="540" as="sourcePoint" />
+            <mxPoint x="1120" y="540" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- m11: ZTLService -> ZTLController (return, dashed) -->
+        <mxCell id="msg11" value="ZTL creata" style="html=1;verticalAlign=bottom;endArrow=open;endFill=0;startArrow=none;dashed=1;strokeWidth=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1120" y="580" as="sourcePoint" />
+            <mxPoint x="865" y="580" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- m12: ZTLController -> Operatore (return, dashed) -->
+        <mxCell id="msg12" value="201 Created { ztl }" style="html=1;verticalAlign=bottom;endArrow=open;endFill=0;startArrow=none;dashed=1;strokeWidth=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="865" y="620" as="sourcePoint" />
+            <mxPoint x="100" y="620" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" agent="Claude" version="24.0.0">
+  <diagram name="Modello ER" id="er-diagram-1">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1350" pageHeight="800" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Entita: ZTL -->
+        <mxCell id="ent_ztl" value="ZTL" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=0;resizeParentMax=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="200" height="104" as="geometry" />
+        </mxCell>
+        <mxCell id="ztl_1" value="id (PK)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_ztl">
+          <mxGeometry y="26" width="200" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="ztl_2" value="nome" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_ztl">
+          <mxGeometry y="52" width="200" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="ztl_3" value="citta" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_ztl">
+          <mxGeometry y="78" width="200" height="26" as="geometry" />
+        </mxCell>
+
+        <!-- Entita: Varco -->
+        <mxCell id="ent_varco" value="Varco" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=0;resizeParentMax=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="184" width="200" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="varco_1" value="id (PK)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_varco">
+          <mxGeometry y="26" width="200" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="varco_2" value="ztlId (FK)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_varco">
+          <mxGeometry y="52" width="200" height="26" as="geometry" />
+        </mxCell>
+
+        <!-- Entita: FasciaOraria -->
+        <mxCell id="ent_fascia" value="FasciaOraria" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=0;resizeParentMax=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="302" width="220" height="156" as="geometry" />
+        </mxCell>
+        <mxCell id="fascia_1" value="id (PK)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_fascia">
+          <mxGeometry y="26" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="fascia_2" value="varcoId (FK)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_fascia">
+          <mxGeometry y="52" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="fascia_3" value="tipoGiorno" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_fascia">
+          <mxGeometry y="78" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="fascia_4" value="oraApertura" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_fascia">
+          <mxGeometry y="104" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="fascia_5" value="oraChiusura" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_fascia">
+          <mxGeometry y="130" width="220" height="26" as="geometry" />
+        </mxCell>
+
+        <!-- Entita: TipoVeicolo -->
+        <mxCell id="ent_tipoveic" value="TipoVeicolo" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=0;resizeParentMax=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="40" width="200" height="104" as="geometry" />
+        </mxCell>
+        <mxCell id="tipoveic_1" value="id (PK)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_tipoveic">
+          <mxGeometry y="26" width="200" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="tipoveic_2" value="nome" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_tipoveic">
+          <mxGeometry y="52" width="200" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="tipoveic_3" value="tariffaBase" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_tipoveic">
+          <mxGeometry y="78" width="200" height="26" as="geometry" />
+        </mxCell>
+
+        <!-- Entita: Veicolo -->
+        <mxCell id="ent_veicolo" value="Veicolo" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=0;resizeParentMax=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="184" width="220" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="veicolo_1" value="targa (PK)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_veicolo">
+          <mxGeometry y="26" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="veicolo_2" value="tipoVeicoloId (FK)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_veicolo">
+          <mxGeometry y="52" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="veicolo_3" value="proprietarioId (FK)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_veicolo">
+          <mxGeometry y="78" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="veicolo_4" value="inWhiteList" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_veicolo">
+          <mxGeometry y="104" width="220" height="26" as="geometry" />
+        </mxCell>
+
+        <!-- Entita: Transito -->
+        <mxCell id="ent_transito" value="Transito" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=0;resizeParentMax=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="354" width="220" height="156" as="geometry" />
+        </mxCell>
+        <mxCell id="transito_1" value="id (PK)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_transito">
+          <mxGeometry y="26" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="transito_2" value="veicoloTarga (FK)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_transito">
+          <mxGeometry y="52" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="transito_3" value="varcoId (FK)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_transito">
+          <mxGeometry y="78" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="transito_4" value="dataOra" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_transito">
+          <mxGeometry y="104" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="transito_5" value="tipo (ingresso/uscita)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_transito">
+          <mxGeometry y="130" width="220" height="26" as="geometry" />
+        </mxCell>
+
+        <!-- Entita: Utente -->
+        <mxCell id="ent_utente" value="Utente" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=0;resizeParentMax=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="40" width="240" height="182" as="geometry" />
+        </mxCell>
+        <mxCell id="utente_1" value="id (PK)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_utente">
+          <mxGeometry y="26" width="240" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="utente_2" value="email" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_utente">
+          <mxGeometry y="52" width="240" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="utente_3" value="passwordHash" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_utente">
+          <mxGeometry y="78" width="240" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="utente_4" value="ruolo (operatore/varco/automobilista/admin)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=10;" vertex="1" parent="ent_utente">
+          <mxGeometry y="104" width="240" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="utente_5" value="credito" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_utente">
+          <mxGeometry y="130" width="240" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="utente_6" value="varcoId (FK, nullable)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_utente">
+          <mxGeometry y="156" width="240" height="26" as="geometry" />
+        </mxCell>
+
+        <!-- Entita: Infrazione -->
+        <mxCell id="ent_infrazione" value="Infrazione" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=0;resizeParentMax=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="900" y="560" width="240" height="156" as="geometry" />
+        </mxCell>
+        <mxCell id="infrazione_1" value="id (PK)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_infrazione">
+          <mxGeometry y="26" width="240" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="infrazione_2" value="transitoId (FK, univoco)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_infrazione">
+          <mxGeometry y="52" width="240" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="infrazione_3" value="importo" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_infrazione">
+          <mxGeometry y="78" width="240" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="infrazione_4" value="uuidPagamento" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_infrazione">
+          <mxGeometry y="104" width="240" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="infrazione_5" value="dataCreazione" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=6;overflow=hidden;portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="ent_infrazione">
+          <mxGeometry y="130" width="240" height="26" as="geometry" />
+        </mxCell>
+
+        <!-- Relazioni -->
+        <mxCell id="rel1" value="1 - N" style="html=1;endArrow=none;startArrow=none;rounded=0;fontSize=11;" edge="1" parent="1" source="ent_ztl" target="ent_varco">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rel2" value="1 - N" style="html=1;endArrow=none;startArrow=none;rounded=0;fontSize=11;" edge="1" parent="1" source="ent_varco" target="ent_fascia">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rel3" value="1 - N" style="html=1;endArrow=none;startArrow=none;rounded=0;fontSize=11;" edge="1" parent="1" source="ent_tipoveic" target="ent_veicolo">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rel4" value="1 - N (proprietario)" style="html=1;endArrow=none;startArrow=none;rounded=0;fontSize=11;" edge="1" parent="1" source="ent_utente" target="ent_veicolo">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rel5" value="1 - N" style="html=1;endArrow=none;startArrow=none;rounded=0;fontSize=11;" edge="1" parent="1" source="ent_veicolo" target="ent_transito">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rel6" value="1 - N" style="html=1;endArrow=none;startArrow=none;rounded=0;fontSize=11;" edge="1" parent="1" source="ent_varco" target="ent_transito">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rel7" value="1 - 0..1" style="html=1;endArrow=none;startArrow=none;rounded=0;fontSize=11;" edge="1" parent="1" source="ent_transito" target="ent_infrazione">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rel8" value="1 - 0..1 (varcoId)" style="html=1;endArrow=none;startArrow=none;rounded=0;fontSize=11;" edge="1" parent="1" source="ent_utente" target="ent_varco">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
