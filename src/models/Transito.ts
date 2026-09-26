@@ -2,11 +2,11 @@ import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/database';
 
 class Transito extends Model {
-  public id!: number;
-  public veicoloTarga!: string;
-  public varcoId!: number;
-  public dataOra!: Date;
-  public tipo!: 'ingresso' | 'uscita';
+  declare id: number;
+  declare veicoloTarga: string;
+  declare varcoId: number;
+  declare dataOra: Date;
+  declare tipo: 'ingresso' | 'uscita';
 }
 
 Transito.init(

@@ -2,11 +2,11 @@ import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/database';
 
 class FasciaOraria extends Model {
-  public id!: number;
-  public varcoId!: number;
-  public tipoGiorno!: 'feriale' | 'festivo';
-  public oraApertura!: string;
-  public oraChiusura!: string;
+  declare id: number;
+  declare varcoId: number;
+  declare tipoGiorno: 'feriale' | 'festivo';
+  declare oraApertura: string;
+  declare oraChiusura: string;
 }
 
 FasciaOraria.init(

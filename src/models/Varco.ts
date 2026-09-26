@@ -2,9 +2,9 @@ import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/database';
 
 class Varco extends Model {
-  public id!: number;
-  public posizione!: string;
-  public ztlId!: number;
+  declare id: number;
+  declare posizione: string;
+  declare ztlId: number;
 }
 
 Varco.init(

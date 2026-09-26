@@ -2,9 +2,9 @@ import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/database';
 
 class TipoVeicolo extends Model {
-  public id!: number;
-  public nome!: string;
-  public tariffaBase!: number;
+  declare id: number;
+  declare nome: string;
+  declare tariffaBase: number;
 }
 
 TipoVeicolo.init(

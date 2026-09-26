@@ -2,10 +2,10 @@ import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/database';
 
 class Veicolo extends Model {
-  public targa!: string;
-  public tipoVeicoloId!: number;
-  public proprietarioId!: number;
-  public inWhiteList!: boolean;
+  declare targa: string;
+  declare tipoVeicoloId: number;
+  declare proprietarioId: number;
+  declare inWhiteList: boolean;
 }
 
 Veicolo.init(

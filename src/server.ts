@@ -1,10 +1,6 @@
-import dotenv from 'dotenv';
-dotenv.config();
-
 import app from './app';
 import { sequelize } from './models';
-
-const PORT = Number(process.env.PORT) || 3000;
+import { env } from './config/env';
 
 async function start() {
   try {
@@ -14,8 +10,8 @@ async function start() {
     await sequelize.sync();
     console.log('Modelli sincronizzati con il database');
 
-    app.listen(PORT, () => {
-      console.log(`Server in ascolto sulla porta ${PORT}`);
+    app.listen(env.porta, () => {
+      console.log(`Server in ascolto sulla porta ${env.porta}`);
     });
   } catch (error) {
     console.error('Errore in fase di avvio:', error);

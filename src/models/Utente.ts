@@ -2,12 +2,12 @@ import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/database';
 
 class Utente extends Model {
-  public id!: number;
-  public email!: string;
-  public passwordHash!: string;
-  public ruolo!: 'operatore' | 'varco' | 'automobilista' | 'admin';
-  public credito!: number;
-  public varcoId!: number | null; // solo per ruolo=varco
+  declare id: number;
+  declare email: string;
+  declare passwordHash: string;
+  declare ruolo: 'operatore' | 'varco' | 'automobilista' | 'admin';
+  declare credito: number;
+  declare varcoId: number | null; // solo per ruolo=varco
 }
 
 Utente.init(

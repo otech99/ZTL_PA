@@ -2,9 +2,9 @@ import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/database';
 
 class ZTL extends Model {
-  public id!: number;
-  public nome!: string;
-  public citta!: string;
+  declare id: number;
+  declare nome: string;
+  declare citta: string;
 }
 
 ZTL.init(
