@@ -11,7 +11,7 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER}"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -21,22 +21,14 @@ services:
     restart: always
     ports:
       - "${PORT}:${PORT}"
+    env_file:
+      - .env
     environment:
       - NODE_ENV=production
-      - PORT=${PORT}
       - DB_HOST=db
-      - DB_PORT=5432
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - JWT_PRIVATE_KEY_PATH=${JWT_PRIVATE_KEY_PATH}
-      - JWT_PUBLIC_KEY_PATH=${JWT_PUBLIC_KEY_PATH}
-      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
     depends_on:
       db:
         condition: service_healthy
-    volumes:
-      - ./keys:/app/keys
 
 volumes:
   pgdata:

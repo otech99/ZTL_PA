@@ -31,9 +31,14 @@ Utente.init(
       allowNull: false,
     },
     credito: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
       defaultValue: 0,
+      validate: { min: 0 },
+      // postgres restituisce i DECIMAL come stringhe, qui li riportiamo a numero
+      get() {
+        return Number(this.getDataValue('credito'));
+      },
     },
     varcoId: {
       type: DataTypes.INTEGER,

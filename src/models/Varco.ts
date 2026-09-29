@@ -27,6 +27,8 @@ Varco.init(
     sequelize,
     modelName: 'Varco',
     tableName: 'varchi',
+    // nella stessa ZTL non possono esistere due varchi nella stessa posizione
+    indexes: [{ unique: true, fields: ['ztlId', 'posizione'] }],
   }
 );
 

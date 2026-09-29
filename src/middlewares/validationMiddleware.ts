@@ -7,7 +7,10 @@ export const validationMiddleware: RequestHandler = (req, res, next) => {
   const errori = validationResult(req);
 
   if (!errori.isEmpty()) {
-    const messaggi = errori.array().map((errore) => String(errore.msg));
+    // per gli errori su un campo si indica anche quale (es. fasce[1].oraFine)
+    const messaggi = errori
+      .array()
+      .map((errore) => (errore.type === 'field' ? `${errore.path}: ${String(errore.msg)}` : String(errore.msg)));
     return next(new BadRequestError(messaggi.join(', ')));
   }
 

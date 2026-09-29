@@ -19,8 +19,13 @@ TipoVeicolo.init(
       allowNull: false,
     },
     tariffaBase: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
+      validate: { min: 0 },
+      // postgres restituisce i DECIMAL come stringhe, qui li riportiamo a numero
+      get() {
+        return Number(this.getDataValue('tariffaBase'));
+      },
     },
   },
   {

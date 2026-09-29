@@ -27,6 +27,8 @@ ZTL.init(
     sequelize,
     modelName: 'ZTL',
     tableName: 'ztl',
+    // nella stessa città non possono esistere due ZTL con lo stesso nome
+    indexes: [{ unique: true, fields: ['nome', 'citta'] }],
   }
 );
 
