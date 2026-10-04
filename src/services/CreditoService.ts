@@ -3,7 +3,9 @@ import { sequelize, Utente } from '../models';
 import { ICreditoService } from '../interfaces/ICreditoService';
 import { NotFoundError, UnauthorizedError } from '../errors/AppError';
 
+// gestione del credito in token: verifica, addebito e ricarica
 export class CreditoService implements ICreditoService {
+  // lancia 401 se l'utente non esiste o se il suo credito non copre il costo
   async verificaCredito(utenteId: number, costo: number): Promise<void> {
     const utente = await Utente.findByPk(utenteId, { attributes: ['credito'] });
 
@@ -16,7 +18,7 @@ export class CreditoService implements ICreditoService {
     }
   }
 
-  // sottrazione fatta dal database in un'unica istruzione, solo se il credito basta ancora:
+  // scala il costo con un'unica istruzione sul database, solo se il credito basta ancora:
   // due richieste contemporanee non possono portarlo sotto zero
   async addebita(utenteId: number, costo: number): Promise<boolean> {
     const [righeAggiornate] = await Utente.update(
@@ -27,7 +29,7 @@ export class CreditoService implements ICreditoService {
     return righeAggiornate === 1;
   }
 
-  // la ricarica si somma al credito attuale
+  // somma l'importo al credito attuale con un'unica istruzione, così nessuna ricarica va persa
   async ricarica(email: string, importo: number): Promise<{ email: string; credito: number }> {
     const [righeAggiornate, utenti] = await Utente.update(
       { credito: sequelize.literal(`"credito" + ${sequelize.escape(importo)}`) },

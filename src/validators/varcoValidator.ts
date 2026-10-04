@@ -1,6 +1,6 @@
-import { body, param, checkExact } from 'express-validator';
+import { body, checkExact } from 'express-validator';
+import { MESSAGGIO_CAMPI, decimaleNelCorpo, idValido, interoNelCorpo } from './regoleComuni';
 
-const MESSAGGIO_CAMPI = 'Campi non ammessi nella richiesta';
 const ORA = /^([01]\d|2[0-3]):[0-5]\d$/;
 // una fascia può terminare a mezzanotte
 const ORA_FINE = /^(([01]\d|2[0-3]):[0-5]\d|24:00)$/;
@@ -12,6 +12,7 @@ interface FasciaBenFormata {
   oraFine: string;
 }
 
+// verifica che una fascia abbia giorno e orari validi, per poterla confrontare con le altre
 function isFasciaBenFormata(valore: unknown): valore is FasciaBenFormata {
   if (typeof valore !== 'object' || valore === null) {
     return false;
@@ -39,16 +40,14 @@ function ciSonoSovrapposizioni(fasce: unknown[]): boolean {
   return false;
 }
 
-const idValido = () =>
-  param('id').isInt({ min: 1 }).withMessage("L'id deve essere un intero positivo");
-
+// regole su posizione, ZTL di appartenenza ed elenco delle fasce orarie
 const campiVarco = () => [
   body('posizione')
-    .isString().withMessage('La posizione deve essere una stringa')
+    .isString().withMessage('Deve essere una stringa')
     .bail()
     .trim()
     .notEmpty().withMessage('La posizione è obbligatoria'),
-  body('ztlId').isInt({ min: 1 }).withMessage('ztlId deve essere un intero positivo'),
+  interoNelCorpo('ztlId', 1, Number.MAX_SAFE_INTEGER, 'Deve essere un numero intero positivo'),
 
   // checkExact non controlla i campi dentro gli oggetti dell'elenco, serve un controllo dedicato
   body('fasce.*')
@@ -56,8 +55,7 @@ const campiVarco = () => [
     .bail()
     .custom((fascia: Record<string, unknown>) => Object.keys(fascia).every((campo) => CAMPI_FASCIA.includes(campo)))
     .withMessage('Campi non ammessi nella fascia'),
-  body('fasce.*.giornoSettimana')
-    .isInt({ min: 1, max: 7 }).withMessage('Il giorno deve essere compreso tra 1 (lunedì) e 7 (domenica)'),
+  interoNelCorpo('fasce.*.giornoSettimana', 1, 7, 'Deve essere un numero intero tra 1 (lunedì) e 7 (domenica)'),
   body('fasce.*.oraInizio')
     .matches(ORA).withMessage('Formato orario non valido, usare HH:MM'),
   body('fasce.*.oraFine')
@@ -69,19 +67,21 @@ const campiVarco = () => [
       return !(typeof inizio === 'string' && ORA.test(inizio) && fine <= inizio);
     })
     .withMessage('Deve essere successiva a oraInizio'),
-  body('fasce.*.maggiorazione')
-    .optional()
-    .isFloat({ gt: 0, max: 99.99 }).withMessage('La maggiorazione deve essere un numero positivo'),
+  decimaleNelCorpo('fasce.*.maggiorazione', 0, 99.99, 'Deve essere un numero positivo').optional(),
 
   // controllo sull'elenco intero, dopo quelli sulle singole fasce
   body('fasce')
-    .isArray().withMessage('fasce deve essere un elenco')
+    .isArray().withMessage('Deve essere un elenco')
     .bail()
     .custom((fasce: unknown[]) => !ciSonoSovrapposizioni(fasce))
     .withMessage('Fasce sovrapposte nello stesso giorno'),
 ];
 
+// elenco: nessun parametro ammesso
 export const elencoVarchiValidator = checkExact([], { message: MESSAGGIO_CAMPI });
+// dettaglio ed eliminazione: solo l'id nell'indirizzo
 export const idVarcoValidator = checkExact([idValido()], { message: MESSAGGIO_CAMPI });
+// creazione: posizione, ZTL e fasce
 export const creaVarcoValidator = checkExact(campiVarco(), { message: MESSAGGIO_CAMPI });
+// modifica: id nell'indirizzo più tutti i campi del varco
 export const modificaVarcoValidator = checkExact([idValido(), ...campiVarco()], { message: MESSAGGIO_CAMPI });

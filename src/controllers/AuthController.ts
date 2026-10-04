@@ -1,15 +1,15 @@
+import { StatusCodes } from 'http-status-codes';
 import { Request, Response } from 'express';
+import { matchedData } from 'express-validator';
 import { IAuthService } from '../interfaces/IAuthService';
 
 export class AuthController {
   constructor(private readonly authService: IAuthService) {}
 
-  // arrow function: mantiene il this quando il metodo viene passato al router
+  // verifica le credenziali e restituisce il token JWT
   login = async (req: Request, res: Response): Promise<void> => {
-    const { email, password } = req.body as { email: string; password: string };
-
+    const { email, password } = matchedData(req) as { email: string; password: string };
     const token = await this.authService.login(email, password);
-
-    res.status(200).json({ token });
+    res.status(StatusCodes.OK).json({ token });
   };
 }

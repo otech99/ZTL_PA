@@ -1,42 +1,39 @@
+import { StatusCodes } from 'http-status-codes';
 import { Request, Response } from 'express';
-import { DatiFascia, DatiVarco, VarcoService } from '../services/VarcoService';
+import { matchedData } from 'express-validator';
+import { DatiVarco, VarcoService } from '../services/VarcoService';
 
+// i dati arrivano da matchedData: già validati, ripuliti e con l'id convertito in numero
 export class VarcoController {
   constructor(private readonly varcoService: VarcoService) {}
 
+  // restituisce tutti i varchi con le loro fasce orarie
   elenco = async (req: Request, res: Response): Promise<void> => {
-    res.status(200).json(await this.varcoService.elenco());
+    res.status(StatusCodes.OK).json(await this.varcoService.elenco());
   };
 
+  // restituisce il varco indicato con le sue fasce orarie
   dettaglio = async (req: Request, res: Response): Promise<void> => {
-    res.status(200).json(await this.varcoService.dettaglio(Number(req.params.id)));
+    const { id } = matchedData(req) as { id: number };
+    res.status(StatusCodes.OK).json(await this.varcoService.dettaglio(id));
   };
 
+  // crea un varco insieme alle sue fasce orarie
   crea = async (req: Request, res: Response): Promise<void> => {
-    res.status(201).json(await this.varcoService.crea(this.datiDaRichiesta(req)));
+    const dati = matchedData(req) as DatiVarco;
+    res.status(StatusCodes.CREATED).json(await this.varcoService.crea(dati));
   };
 
+  // sostituisce posizione, ZTL e fasce orarie del varco indicato
   modifica = async (req: Request, res: Response): Promise<void> => {
-    res.status(200).json(await this.varcoService.modifica(Number(req.params.id), this.datiDaRichiesta(req)));
+    const { id, ...dati } = matchedData(req) as DatiVarco & { id: number };
+    res.status(StatusCodes.OK).json(await this.varcoService.modifica(id, dati));
   };
 
+  // elimina il varco indicato, se non ha transiti registrati
   elimina = async (req: Request, res: Response): Promise<void> => {
-    await this.varcoService.elimina(Number(req.params.id));
-    res.status(204).send();
+    const { id } = matchedData(req) as { id: number };
+    await this.varcoService.elimina(id);
+    res.status(StatusCodes.NO_CONTENT).send();
   };
-
-  // prende dal body solo i campi previsti, con i numeri convertiti
-  private datiDaRichiesta(req: Request): DatiVarco {
-    const { posizione, ztlId, fasce } = req.body as DatiVarco;
-    return {
-      posizione,
-      ztlId: Number(ztlId),
-      fasce: fasce.map((fascia: DatiFascia) => ({
-        giornoSettimana: Number(fascia.giornoSettimana),
-        oraInizio: fascia.oraInizio,
-        oraFine: fascia.oraFine,
-        maggiorazione: fascia.maggiorazione === undefined ? undefined : Number(fascia.maggiorazione),
-      })),
-    };
-  }
 }

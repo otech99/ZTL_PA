@@ -1,13 +1,14 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/database';
 
+// utente del sistema: operatore, dispositivo varco, automobilista o admin
 class Utente extends Model {
   declare id: number;
   declare email: string;
-  declare passwordHash: string;
+  declare passwordHash: string; // hash bcrypt, la password in chiaro non viene mai salvata
   declare ruolo: 'operatore' | 'varco' | 'automobilista' | 'admin';
-  declare credito: number;
-  declare varcoId: number | null; // solo per ruolo=varco
+  declare credito: number; // token disponibili per le richieste autenticate
+  declare varcoId: number | null; // solo per ruolo=varco: il varco fisico che il dispositivo rappresenta
 }
 
 Utente.init(

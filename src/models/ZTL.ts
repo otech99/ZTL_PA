@@ -1,6 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/database';
 
+// zona a traffico limitato di una città, a cui appartengono uno o più varchi
 class ZTL extends Model {
   declare id: number;
   declare nome: string;

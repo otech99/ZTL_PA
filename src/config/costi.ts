@@ -1,5 +1,5 @@
-// costo in token di ogni operazione autenticata (RF7)
-// la ricarica del credito da parte dell'admin non ha costo e non compare qui
+// costo in token di ogni operazione autenticata (RF7), raccolto in un unico punto.
+// La ricarica del credito da parte dell'admin non ha costo e non compare qui
 export const COSTI = {
   consultazioneZtl: 0.05,
   creazioneZtl: 0.5,

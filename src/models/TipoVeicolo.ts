@@ -1,6 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/database';
 
+// categoria di veicolo (es. auto, moto), da cui dipende la tariffa base della multa
 class TipoVeicolo extends Model {
   declare id: number;
   declare nome: string;

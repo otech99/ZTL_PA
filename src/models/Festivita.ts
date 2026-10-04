@@ -1,7 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/database';
 
-// festività nazionali a data fissa, valide ogni anno
+// festività nazionale a data fissa, valida ogni anno: in quel giorno valgono orari e tariffe festivi
 class Festivita extends Model {
   declare id: number;
   declare giorno: number;
@@ -35,6 +35,7 @@ Festivita.init(
     sequelize,
     modelName: 'Festivita',
     tableName: 'festivita',
+    // la stessa festività non può comparire due volte
     indexes: [{ unique: true, fields: ['giorno', 'mese'] }],
   }
 );

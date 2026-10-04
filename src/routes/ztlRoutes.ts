@@ -15,6 +15,7 @@ const router = Router();
 // tutte le rotte delle ZTL sono riservate all'operatore autenticato
 router.use(autenticazione, roleMiddleware('operatore'));
 
+// per ogni rotta: validazione, verifica del credito, poi il controller
 router.get('/', elencoZtlValidator, validationMiddleware, credito(COSTI.consultazioneZtl), ztlController.elenco);
 router.get('/:id', idZtlValidator, validationMiddleware, credito(COSTI.consultazioneZtl), ztlController.dettaglio);
 router.post('/', creaZtlValidator, validationMiddleware, credito(COSTI.creazioneZtl), ztlController.crea);

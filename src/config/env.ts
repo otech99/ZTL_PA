@@ -3,7 +3,7 @@ import { SignOptions } from 'jsonwebtoken';
 
 dotenv.config();
 
-// legge una variabile obbligatoria, ferma l'avvio se manca
+// legge una variabile obbligatoria: se manca, l'avvio si ferma subito con un messaggio chiaro
 function richiesta(nome: string): string {
   const valore = process.env[nome];
   if (!valore) {
@@ -12,11 +12,12 @@ function richiesta(nome: string): string {
   return valore;
 }
 
-// nel .env le chiavi sono su una riga sola, con \n al posto degli a capo
+// legge una chiave JWT: nel .env è su una riga sola, con \n al posto degli a capo
 function chiave(nome: string): string {
   return richiesta(nome).replace(/\\n/g, '\n');
 }
 
+// configurazione dell'applicazione, letta una sola volta all'avvio
 export const env = {
   porta: Number(process.env.PORT ?? 3000),
   db: {

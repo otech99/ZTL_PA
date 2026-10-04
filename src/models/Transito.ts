@@ -1,6 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/database';
 
+// passaggio di un veicolo attraverso un varco, in ingresso o in uscita
 class Transito extends Model {
   declare id: number;
   declare veicoloTarga: string;

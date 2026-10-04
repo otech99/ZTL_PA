@@ -1,8 +1,10 @@
-import { sequelize, Utente, Festivita, ZTL, Varco, FasciaOraria } from '../models';
+import { sequelize, Utente, Festivita, ZTL, Varco, FasciaOraria, TipoVeicolo, Veicolo } from '../models';
 import { authService } from '../container';
 
+// ricrea il database da zero e lo popola con i dati iniziali: una ZTL con un varco e i suoi orari,
+// un utente per ruolo con il credito iniziale, tipi di veicolo e veicoli, festività nazionali
 async function seed() {
-  // ricrea tutte le tabelle da zero
+  // force: elimina e ricrea tutte le tabelle
   await sequelize.sync({ force: true });
 
   const ztl = await ZTL.create({ nome: 'Centro Storico', citta: 'Ancona' });
@@ -22,12 +24,31 @@ async function seed() {
 
   const passwordHash = await authService.hashPassword('password123');
 
-  await Utente.bulkCreate([
+  const utenti = await Utente.bulkCreate([
     { email: 'operatore@ztl.it', passwordHash, ruolo: 'operatore', credito: 10 },
     // il dispositivo del varco è collegato al varco fisico che rappresenta
     { email: 'varco@ztl.it', passwordHash, ruolo: 'varco', credito: 10, varcoId: varco.id },
     { email: 'automobilista@ztl.it', passwordHash, ruolo: 'automobilista', credito: 10 },
     { email: 'admin@ztl.it', passwordHash, ruolo: 'admin', credito: 100 },
+  ]);
+
+  const automobilista = utenti.find((utente) => utente.ruolo === 'automobilista');
+  if (!automobilista) {
+    throw new Error('Automobilista non creato');
+  }
+
+  const [auto, moto, camion] = await TipoVeicolo.bulkCreate([
+    { nome: 'auto', tariffaBase: 80 },
+    { nome: 'moto', tariffaBase: 50 },
+    { nome: 'camion', tariffaBase: 120 },
+  ]);
+
+  await Veicolo.bulkCreate([
+    { targa: 'AB123CD', tipoVeicoloId: auto.id, proprietarioId: automobilista.id },
+    { targa: 'EF456GH', tipoVeicoloId: moto.id, proprietarioId: automobilista.id },
+    { targa: 'IL789MN', tipoVeicoloId: camion.id, proprietarioId: automobilista.id },
+    // veicolo in white list: i suoi transiti non generano mai multe
+    { targa: 'WL000AA', tipoVeicoloId: auto.id, proprietarioId: automobilista.id, inWhiteList: true },
   ]);
 
   await Festivita.bulkCreate([

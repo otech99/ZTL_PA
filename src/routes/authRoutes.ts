@@ -5,6 +5,7 @@ import { validationMiddleware } from '../middlewares/validationMiddleware';
 
 const router = Router();
 
+// login: unica rotta non autenticata, restituisce il token JWT
 router.post('/login', loginValidator, validationMiddleware, authController.login);
 
 export default router;

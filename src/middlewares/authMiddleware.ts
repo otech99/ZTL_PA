@@ -2,7 +2,8 @@ import { RequestHandler } from 'express';
 import { IAuthService } from '../interfaces/IAuthService';
 import { UnauthorizedError } from '../errors/AppError';
 
-// verifica il JWT e salva i dati dell'utente nella richiesta
+// primo anello della catena: verifica il JWT dell'intestazione Authorization
+// e salva i dati dell'utente nella richiesta per gli anelli successivi
 export function authMiddleware(authService: IAuthService): RequestHandler {
   return (req, res, next) => {
     const header = req.headers.authorization;

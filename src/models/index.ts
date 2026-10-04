@@ -9,33 +9,38 @@ import Transito from './Transito';
 import Infrazione from './Infrazione';
 import Festivita from './Festivita';
 
-// RESTRICT: il database rifiuta l'eliminazione se esistono righe collegate,
-// così lo storico di transiti e multe non può essere cancellato a cascata
+// relazioni tra le tabelle. RESTRICT: il database rifiuta l'eliminazione se esistono
+// righe collegate, così lo storico di transiti e multe non può essere cancellato a cascata
 
+// una ZTL ha più varchi
 ZTL.hasMany(Varco, { foreignKey: 'ztlId', onDelete: 'RESTRICT' });
 Varco.belongsTo(ZTL, { foreignKey: 'ztlId', onDelete: 'RESTRICT' });
 
-// le fasce sono solo configurazione del varco: si eliminano con lui
+// un varco ha più fasce orarie; sono solo configurazione del varco, quindi si eliminano con lui
 Varco.hasMany(FasciaOraria, { foreignKey: 'varcoId', as: 'fasce', onDelete: 'CASCADE' });
 FasciaOraria.belongsTo(Varco, { foreignKey: 'varcoId', onDelete: 'CASCADE' });
 
+// un tipo di veicolo raggruppa più veicoli
 TipoVeicolo.hasMany(Veicolo, { foreignKey: 'tipoVeicoloId', onDelete: 'RESTRICT' });
 Veicolo.belongsTo(TipoVeicolo, { foreignKey: 'tipoVeicoloId', onDelete: 'RESTRICT' });
 
+// un utente possiede più veicoli
 Utente.hasMany(Veicolo, { foreignKey: 'proprietarioId', as: 'veicoli', onDelete: 'RESTRICT' });
 Veicolo.belongsTo(Utente, { foreignKey: 'proprietarioId', as: 'proprietario', onDelete: 'RESTRICT' });
 
-// targa (non id) è la PK di Veicolo, va specificato esplicitamente
+// un veicolo ha più transiti; targa (non id) è la chiave primaria di Veicolo, va indicata esplicitamente
 Veicolo.hasMany(Transito, { foreignKey: 'veicoloTarga', sourceKey: 'targa', onDelete: 'RESTRICT' });
 Transito.belongsTo(Veicolo, { foreignKey: 'veicoloTarga', targetKey: 'targa', onDelete: 'RESTRICT' });
 
+// un varco registra più transiti
 Varco.hasMany(Transito, { foreignKey: 'varcoId', onDelete: 'RESTRICT' });
 Transito.belongsTo(Varco, { foreignKey: 'varcoId', onDelete: 'RESTRICT' });
 
-Transito.hasOne(Infrazione, { foreignKey: 'transitoId', onDelete: 'RESTRICT' });
+// un transito genera al massimo una multa
+Transito.hasOne(Infrazione, { foreignKey: 'transitoId', as: 'multa', onDelete: 'RESTRICT' });
 Infrazione.belongsTo(Transito, { foreignKey: 'transitoId', onDelete: 'RESTRICT' });
 
-// utente con ruolo=varco collegato al varco fisico; se il varco sparisce il collegamento si azzera
+// l'utente con ruolo=varco è collegato al varco fisico; se il varco viene eliminato il collegamento si azzera
 Varco.hasOne(Utente, { foreignKey: 'varcoId', as: 'utenteVarco', onDelete: 'SET NULL' });
 Utente.belongsTo(Varco, { foreignKey: 'varcoId', as: 'varco', onDelete: 'SET NULL' });
 

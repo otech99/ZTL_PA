@@ -1,13 +1,15 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/database';
 
+// intervallo in cui un varco è attivo in un giorno della settimana: chi passa in quel momento viene multato.
+// Nessuna fascia per un giorno significa varco non attivo quel giorno
 class FasciaOraria extends Model {
   declare id: number;
   declare varcoId: number;
   declare giornoSettimana: number; // 1 = lunedì ... 7 = domenica (vale anche per i festivi)
   declare oraInizio: string;
   declare oraFine: string;
-  declare maggiorazione: number;
+  declare maggiorazione: number; // moltiplicatore della tariffa base per questa fascia
 }
 
 FasciaOraria.init(

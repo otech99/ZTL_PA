@@ -2,11 +2,13 @@ import app from './app';
 import { sequelize } from './models';
 import { env } from './config/env';
 
+// avvia il server: connessione al database, creazione delle tabelle mancanti, ascolto sulla porta
 async function start() {
   try {
     await sequelize.authenticate();
     console.log('Connessione al database riuscita');
 
+    // crea le tabelle se non esistono, senza modificare quelle già presenti
     await sequelize.sync();
     console.log('Modelli sincronizzati con il database');
 

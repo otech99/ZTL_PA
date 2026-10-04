@@ -15,6 +15,7 @@ const router = Router();
 // tutte le rotte dei varchi sono riservate all'operatore autenticato
 router.use(autenticazione, roleMiddleware('operatore'));
 
+// per ogni rotta: validazione, verifica del credito, poi il controller
 router.get('/', elencoVarchiValidator, validationMiddleware, credito(COSTI.consultazioneVarco), varcoController.elenco);
 router.get('/:id', idVarcoValidator, validationMiddleware, credito(COSTI.consultazioneVarco), varcoController.dettaglio);
 router.post('/', creaVarcoValidator, validationMiddleware, credito(COSTI.creazioneVarco), varcoController.crea);

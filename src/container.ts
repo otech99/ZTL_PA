@@ -1,17 +1,26 @@
 import { env } from './config/env';
 import { IAuthService } from './interfaces/IAuthService';
 import { ICreditoService } from './interfaces/ICreditoService';
+import { IInfrazioneService } from './interfaces/IInfrazioneService';
+import { ITransitoService } from './interfaces/ITransitoService';
 import { AuthService } from './services/AuthService';
 import { CreditoService } from './services/CreditoService';
 import { ZtlService } from './services/ZtlService';
 import { VarcoService } from './services/VarcoService';
+import { InfrazioneService } from './services/InfrazioneService';
+import { TransitoService } from './services/TransitoService';
+import { TariffaFerialeStrategy } from './strategies/TariffaFerialeStrategy';
+import { TariffaFestivaStrategy } from './strategies/TariffaFestivaStrategy';
 import { AuthController } from './controllers/AuthController';
 import { ZtlController } from './controllers/ZtlController';
 import { VarcoController } from './controllers/VarcoController';
+import { TransitoController } from './controllers/TransitoController';
 import { authMiddleware } from './middlewares/authMiddleware';
 import { creditoMiddleware } from './middlewares/creditoMiddleware';
 
-// unico punto dell'applicazione che conosce le classi concrete dei service
+// punto unico di creazione degli oggetti (composition root): qui si creano service e controller
+// e si collegano tra loro. È l'unico file che conosce le classi concrete dei service,
+// il resto dell'applicazione riceve le dipendenze già pronte (Dependency Injection)
 
 // autenticazione
 export const authService: IAuthService = new AuthService(
@@ -29,3 +38,11 @@ export const credito = creditoMiddleware(creditoService);
 // ZTL e varchi
 export const ztlController = new ZtlController(new ZtlService());
 export const varcoController = new VarcoController(new VarcoService());
+
+// transiti e multe: le due strategie della tariffa vengono iniettate nel servizio delle multe
+export const infrazioneService: IInfrazioneService = new InfrazioneService(
+  new TariffaFerialeStrategy(),
+  new TariffaFestivaStrategy(),
+);
+const transitoService: ITransitoService = new TransitoService(infrazioneService);
+export const transitoController = new TransitoController(transitoService);
