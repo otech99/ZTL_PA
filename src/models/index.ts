@@ -14,7 +14,7 @@ import Festivita from './Festivita';
 
 // una ZTL ha più varchi
 ZTL.hasMany(Varco, { foreignKey: 'ztlId', onDelete: 'RESTRICT' });
-Varco.belongsTo(ZTL, { foreignKey: 'ztlId', onDelete: 'RESTRICT' });
+Varco.belongsTo(ZTL, { foreignKey: 'ztlId', as: 'ztl', onDelete: 'RESTRICT' });
 
 // un varco ha più fasce orarie; sono solo configurazione del varco, quindi si eliminano con lui
 Varco.hasMany(FasciaOraria, { foreignKey: 'varcoId', as: 'fasce', onDelete: 'CASCADE' });
@@ -30,11 +30,11 @@ Veicolo.belongsTo(Utente, { foreignKey: 'proprietarioId', as: 'proprietario', on
 
 // un veicolo ha più transiti; targa (non id) è la chiave primaria di Veicolo, va indicata esplicitamente
 Veicolo.hasMany(Transito, { foreignKey: 'veicoloTarga', sourceKey: 'targa', onDelete: 'RESTRICT' });
-Transito.belongsTo(Veicolo, { foreignKey: 'veicoloTarga', targetKey: 'targa', onDelete: 'RESTRICT' });
+Transito.belongsTo(Veicolo, { foreignKey: 'veicoloTarga', targetKey: 'targa', as: 'veicolo', onDelete: 'RESTRICT' });
 
 // un varco registra più transiti
 Varco.hasMany(Transito, { foreignKey: 'varcoId', onDelete: 'RESTRICT' });
-Transito.belongsTo(Varco, { foreignKey: 'varcoId', onDelete: 'RESTRICT' });
+Transito.belongsTo(Varco, { foreignKey: 'varcoId', as: 'varco', onDelete: 'RESTRICT' });
 
 // un transito genera al massimo una multa
 Transito.hasOne(Infrazione, { foreignKey: 'transitoId', as: 'multa', onDelete: 'RESTRICT' });

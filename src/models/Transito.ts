@@ -1,5 +1,8 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/database';
+import type Infrazione from './Infrazione';
+import type Varco from './Varco';
+import type Veicolo from './Veicolo';
 
 // passaggio di un veicolo attraverso un varco, in ingresso o in uscita
 class Transito extends Model {
@@ -8,6 +11,11 @@ class Transito extends Model {
   declare varcoId: number;
   declare dataOra: Date;
   declare tipo: 'ingresso' | 'uscita';
+
+  // dati collegati, presenti solo quando inclusi nell'interrogazione
+  declare multa?: Infrazione | null;
+  declare varco?: Varco;
+  declare veicolo?: Veicolo;
 }
 
 Transito.init(

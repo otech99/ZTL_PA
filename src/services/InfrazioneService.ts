@@ -1,13 +1,13 @@
 import { Op, Transaction } from 'sequelize';
-import { FasciaOraria, Festivita, Infrazione, TipoVeicolo, Transito, Veicolo } from '../models';
-import { IInfrazioneService } from '../interfaces/IInfrazioneService';
+import { FasciaOraria, Festivita, Infrazione, TipoVeicolo, Transito, Varco, Veicolo, ZTL } from '../models';
+import { IInfrazioneService, MultaAutomobilista } from '../interfaces/IInfrazioneService';
 import { TariffaStrategy } from '../strategies/TariffaStrategy';
 import { DataLocale, DOMENICA, dataLocaleRoma } from '../utils/calendario';
 
 // finestra di ricerca dei transiti della stessa giornata: abbondante, il confronto vero avviene sul giorno di Roma
 const FINESTRA_STESSA_GIORNATA_MS = 36 * 60 * 60 * 1000;
 
-// valutazione e creazione delle multe, valutata solo all'atto dell'inserimento di un transito
+// valutazione e creazione delle multe (solo all'atto dell'inserimento di un transito) e loro consultazione
 export class InfrazioneService implements IInfrazioneService {
   // riceve le due strategie della tariffa, create nel container
   constructor(
@@ -53,6 +53,40 @@ export class InfrazioneService implements IInfrazioneService {
     const importo = this.arrotondaAlCentesimo(strategia.calcola(tipo.tariffaBase, fascia.maggiorazione));
 
     return Infrazione.create({ transitoId: transito.id, importo }, { transaction });
+  }
+
+  // multe dei veicoli dell'utente, partendo dai transiti che le hanno generate, dalla più recente
+  async multeDelProprietario(proprietarioId: number): Promise<MultaAutomobilista[]> {
+    const transiti = await Transito.findAll({
+      include: [
+        { model: Infrazione, as: 'multa', required: true, attributes: ['id', 'idBollettino', 'importo'] },
+        { model: Veicolo, as: 'veicolo', required: true, attributes: [], where: { proprietarioId } },
+        {
+          model: Varco,
+          as: 'varco',
+          attributes: ['posizione'],
+          include: [{ model: ZTL, as: 'ztl', attributes: ['nome'] }],
+        },
+      ],
+      order: [['dataOra', 'DESC']],
+    });
+
+    // solo i campi pensati per l'automobilista, senza dati tecnici o di altri utenti
+    return transiti.flatMap((transito) =>
+      transito.multa
+        ? [
+            {
+              id: transito.multa.id,
+              idBollettino: transito.multa.idBollettino,
+              importo: transito.multa.importo,
+              targa: transito.veicoloTarga,
+              dataOra: transito.dataOra,
+              varco: transito.varco?.posizione ?? '',
+              ztl: transito.varco?.ztl?.nome ?? '',
+            },
+          ]
+        : [],
+    );
   }
 
   // festivo = domenica oppure festività nazionale presente nella tabella

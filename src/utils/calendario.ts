@@ -43,3 +43,15 @@ export function dataLocaleRoma(data: Date): DataLocale {
     chiaveGiorno: `${parti.year}-${parti.month}-${parti.day}`,
   };
 }
+
+// data e ora in formato italiano nel fuso di Roma, es. 01/10/2026, 08:30
+export function formattaDataOraRoma(data: Date): string {
+  return data.toLocaleString('it-IT', {
+    timeZone: FUSO_ORARIO,
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}

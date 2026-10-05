@@ -3,6 +3,11 @@ import { IAuthService } from './interfaces/IAuthService';
 import { ICreditoService } from './interfaces/ICreditoService';
 import { IInfrazioneService } from './interfaces/IInfrazioneService';
 import { ITransitoService } from './interfaces/ITransitoService';
+import { IBollettinoService } from './interfaces/IBollettinoService';
+import { BollettinoService } from './services/BollettinoService';
+import { MultaController } from './controllers/MultaController';
+import { BollettinoController } from './controllers/BollettinoController';
+import { AdminController } from './controllers/AdminController';
 import { AuthService } from './services/AuthService';
 import { CreditoService } from './services/CreditoService';
 import { ZtlService } from './services/ZtlService';
@@ -46,3 +51,11 @@ export const infrazioneService: IInfrazioneService = new InfrazioneService(
 );
 const transitoService: ITransitoService = new TransitoService(infrazioneService);
 export const transitoController = new TransitoController(transitoService);
+
+// multe e bollettini: il controller delle multe riusa il servizio delle multe già creato
+export const multaController = new MultaController(infrazioneService);
+const bollettinoService: IBollettinoService = new BollettinoService();
+export const bollettinoController = new BollettinoController(bollettinoService);
+
+// ricarica del credito: l'admin usa lo stesso servizio del credito del middleware
+export const adminController = new AdminController(creditoService);

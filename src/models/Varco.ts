@@ -1,11 +1,15 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/database';
+import type ZTL from './ZTL';
 
 // punto di accesso fisico a una ZTL, dove vengono rilevati i transiti
 class Varco extends Model {
   declare id: number;
   declare posizione: string; // indirizzo o descrizione del punto di controllo
   declare ztlId: number;
+
+  // ZTL di appartenenza, presente solo quando inclusa nell'interrogazione
+  declare ztl?: ZTL;
 }
 
 Varco.init(

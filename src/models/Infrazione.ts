@@ -7,6 +7,7 @@ class Infrazione extends Model {
   declare transitoId: number;
   declare importo: number;
   declare uuidPagamento: string; // identificativo del pagamento riportato nel QR-code del bollettino
+  declare idBollettino: string; // identificativo del bollettino, usato per scaricarlo
   declare dataCreazione: Date;
 }
 
@@ -36,6 +37,13 @@ Infrazione.init(
     uuidPagamento: {
       type: DataTypes.UUID,
       allowNull: false,
+      defaultValue: DataTypes.UUIDV4,
+    },
+    // generato automaticamente, distinto dall'id della multa e dall'uuid del pagamento
+    idBollettino: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      unique: true,
       defaultValue: DataTypes.UUIDV4,
     },
     dataCreazione: {

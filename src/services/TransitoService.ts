@@ -37,7 +37,7 @@ export class TransitoService implements ITransitoService {
 
     return Transito.findAll({
       where: { varcoId },
-      include: [{ model: Infrazione, as: 'multa', attributes: ['id', 'importo'] }],
+      include: [{ model: Infrazione, as: 'multa', attributes: ['id', 'importo', 'idBollettino'] }],
       order: [['dataOra', 'ASC']],
     });
   }
@@ -120,7 +120,7 @@ export class TransitoService implements ITransitoService {
   // restituisce il transito con la sua eventuale multa
   private async dettaglio(id: number): Promise<Transito> {
     const transito = await Transito.findByPk(id, {
-      include: [{ model: Infrazione, as: 'multa', attributes: ['id', 'importo'] }],
+      include: [{ model: Infrazione, as: 'multa', attributes: ['id', 'importo', 'idBollettino'] }],
     });
     if (!transito) {
       throw new NotFoundError('Transito non trovato');
