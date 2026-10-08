@@ -28,3 +28,6 @@ npm-debug.log*
 
 # Configurazione locale di Postman
 .postman/
+
+# Environment Postman, fornito separatamente con la consegna
+*.postman_environment.json
