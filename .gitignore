@@ -7,8 +7,6 @@ dist/
 # Variabili d'ambiente (contengono credenziali/percorsi sensibili)
 .env
 
-# Chiavi JWT (private/pubbliche, generate localmente via npm run generate-keys)
-keys/
 
 # Test
 coverage/
@@ -27,4 +25,6 @@ npm-debug.log*
 
 # Bollettini PDF scaricati durante i test
 *.pdf
+
+# Configurazione locale di Postman
 .postman/

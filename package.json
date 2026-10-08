@@ -2,7 +2,7 @@
   "name": "ztl_pa",
   "version": "1.0.0",
   "description": "Progetto di programmazione avanzata",
-  "main": "index.js",
+  "main": "dist/server.js",
   "directories": {
     "doc": "docs",
     "test": "tests"
