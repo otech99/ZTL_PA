@@ -27,3 +27,4 @@ npm-debug.log*
 
 # Bollettini PDF scaricati durante i test
 *.pdf
+.postman/
