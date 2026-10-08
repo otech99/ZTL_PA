@@ -370,20 +370,21 @@ npm test
 
 ## Test con Postman
 
-La collection `postman/ZTL_PA.postman_collection.json` contiene 50 richieste che coprono tutte le rotte, sia nei casi di successo sia nei principali casi di errore. Ogni richiesta verifica il codice HTTP atteso tramite uno script di test.
+La collection `postman/ZTL_PA.postman_collection.json`, insieme all'environment `postman/ZTL_PA.postman_environment.json`, contiene 50 richieste che coprono tutte le rotte, sia nei casi di successo sia nei principali casi di errore. Ogni richiesta verifica il codice HTTP atteso tramite uno script di test.
 
 ### Esecuzione
 
 1. Avviare il progetto ed eseguire il seed, come descritto in [Avvio del progetto](#avvio-del-progetto).
-2. In Postman selezionare **Import** e scegliere il file della collection.
-3. Eseguire l'intera collection con **Run** (Collection Runner), mantenendo l'ordine delle richieste.
+2. In Postman selezionare **Import** e scegliere i due file della cartella `postman` (collection ed environment).
+3. Selezionare l'environment **ZTL_PA** dal menu in alto a destra.
+4. Eseguire l'intera collection con **Run** (Collection Runner), mantenendo l'ordine delle richieste.
 
-Le richieste della cartella *Auth* eseguono il login dei quattro utenti del seed e salvano i token nelle variabili della collection (`tokenOperatore`, `tokenVarco`, `tokenAutomobilista`, `tokenAdmin`); le richieste successive li usano automaticamente. Allo stesso modo vengono salvati gli identificativi creati durante l'esecuzione (ZTL, varco, transiti, bollettino). La collection può essere eseguita più volte senza ripetere il seed.
+Le richieste della cartella *Auth* eseguono il login dei quattro utenti del seed e salvano i token nelle variabili dell'environment (`tokenOperatore`, `tokenVarco`, `tokenAutomobilista`, `tokenAdmin`); le richieste successive li usano automaticamente. Allo stesso modo vengono salvati gli identificativi creati durante l'esecuzione (ZTL, varco, transiti, bollettino). La collection può essere eseguita più volte senza ripetere il seed.
 
 In alternativa la collection può essere eseguita da terminale con Newman, il runner a riga di comando di Postman:
 
 ```bash
-npx newman run postman/ZTL_PA.postman_collection.json
+npx newman run postman/ZTL_PA.postman_collection.json -e postman/ZTL_PA.postman_environment.json
 ```
 
 ### Contenuto
