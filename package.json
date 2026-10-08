@@ -13,7 +13,7 @@
     "start": "node dist/server.js",
     "test": "jest",
     "seed": "ts-node src/seed/seed.ts",
-    "generate-keys": "mkdir -p keys && openssl genrsa -out keys/jwtRS256.key 2048 && openssl rsa -in keys/jwtRS256.key -pubout -out keys/jwtRS256.key.pub"
+    "generate-keys": "ts-node scripts/generate-keys.ts"
   },
   "repository": {
     "type": "git",
